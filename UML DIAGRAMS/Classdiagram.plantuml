@@ -1,0 +1,81 @@
+@startuml TuendeAfrica
+
+title Tuende Africa
+
+class Client {
+    - registration/Signup(First time): bool
+    - logIn: bool
+    - currentLocation: string
+    - destination: string
+    + view rides available and prices()
+    + enterDetails()
+    + selectRider()
+    + receiveUpdates()
+    + receiveNotifications()
+    + communicateWithRider()
+    + confirmRideNumberPlate()
+    + choosePaymentMode()
+    + receiveNotifications after paying()
+    + giveReview/ratings()
+}
+
+class Rider {
+    - registration/Signup(First time): bool
+    - logIn: bool
+    - Check/confirm ride requests:bool
+    + communicateWithClient()
+    + startRide()
+    + endRide()
+    + confirms client payment()
+}
+
+class RegistrationSignup {
+    - logIn: bool
+    - name: string
+    - emailAddress: string
+    - national id: string
+    - phoneNumber: string
+    - language: string
+    - country: string
+    - password: string
+}
+
+class GPSService{
+    + allocateLocation()[Track ride location[how many mins the rider/client is,how far the package is,riders number plate for identity]
+    + identifyRiderServiceNumberPlates()
+    
+}    
+
+class Ride {
+    - status: string
+    - distance: float
+    - route: string
+    - progress: string
+    + updateStatus()
+    + notifyPickup()
+}
+
+class Payment {
+    + choosePaymentMode(credit card,cash,mobile money()
+}
+
+class Review {
+    - rating: int
+    - comment: string
+    + submitReview()
+}
+
+Client "1" --> "1" Ride : books a ride 
+Client "1" --> "1" Payment : chooses payment mode(credit card,cash)
+Client "1" --> "1" Review : gives review and ratings
+Ride "1" --> "1" Rider : assigned to
+Ride "1" --> "1" Client : sends updates (bike's number plate)
+Rider "1" --> "1" Client : communicates with
+Rider "1" --> "1" Ride : starts and ends a ride 
+Client "1" --> "1" GPSService : uses
+Rider "1" --> "1" GPSService : uses
+
+Client -- RegistrationSignup: sign up
+Rider -- RegistrationSignup: sign up
+
+@enduml

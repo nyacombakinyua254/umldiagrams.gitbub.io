@@ -1,0 +1,60 @@
+@startuml TuendeAfricaSequenceDiagram
+
+title Tuende Africa
+
+actor "Client" as ClientActor
+participant "Mobile App" as MobileApp
+participant "Client Service" as ClientService
+participant "Ride Service" as RideService
+participant "GPS Service" as GPSService
+actor "Rider" as RiderActor
+participant "Rider Service" as RiderService
+
+ClientActor -> MobileApp: Log in/Register to mobile app
+activate MobileApp
+MobileApp -> ClientService: Enter ride details
+RiderActor -> MobileApp: Log in/Register to mobile app
+activate MobileApp
+activate ClientService
+ClientService -> RideService: View ride details and prices
+activate RideService
+ClientService -> RideService: Book ride
+activate RideService
+RideService -> RiderService: Notify rider
+activate RiderService
+RiderService -> RiderActor: Accept ride request
+deactivate RiderService
+MobileApp -> ClientService: Receive updates
+ClientService -> MobileApp: Display ride status
+MobileApp -> GPSService: Track ride location
+activate GPSService
+GPSService -> MobileApp: Provide location updates
+MobileApp -> ClientService: Receive location updates
+ClientService -> ClientActor: Receive notifications
+ClientActor -> ClientActor: Await rider arrival
+ClientActor -> RiderActor: Communicate with rider
+RiderActor -> RiderActor: Confirm pickup details
+ridertActor -> clientActor: Confirm client details
+RiderActor -> ClientActor: Give updates about location
+RiderActor -> ClientActor: Confirm client availability
+RiderActor -> ClientActor: Confirm arrival
+ClientActor -> RiderActor: Confirm pickup
+RiderActor -> ClientActor: Pick up client
+ClientActor -> RiderActor: Confirm drop-off details
+RiderActor -> ClientActor: Start ride
+ClientActor -> RiderActor: Confirm drop-off
+RiderActor -> ClientActor: End ride
+RiderActor -> ClientActor: Drop off client
+ClientActor -> MobileApp: Choose payment mode
+ClientActor -> MobileApp: Select and pay via payment mode of choice
+RiderActor -> ClientActor: Confirm payment 
+ClientActor -> MobileApp: Give review and rate
+MobileApp -> RiderActor: Receive review
+
+deactivate MobileApp
+deactivate ClientService
+deactivate RideService
+deactivate GPSService
+
+@enduml
+
